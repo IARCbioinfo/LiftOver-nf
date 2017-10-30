@@ -87,7 +87,8 @@ process liftover {
     file f
 
     output:
-    file("${input_tag}_${params.genome_into}.vcf") into outputs
+    file("${input_tag}_${params.genome_into}.vcf") into outputs1
+    file("${input_tag}*reject*") into outputs2
 
     shell:
     input_tag =  f.baseName.replace(".gz","").replace(".vcf","").replace(".txt","").replace(".bed","")
