@@ -87,17 +87,21 @@ process liftover {
     file f
 
     output:
-    file("${input_tag}_${params.genome_into}.vcf") into outputs1
+    file("${input_tag}_${params.genome_into}*") into outputs1
     file("${input_tag}*reject*") into outputs2
 
     shell:
     input_tag =  f.baseName.replace(".gz","").replace(".vcf","").replace(".txt","").replace(".bed","")
+    file_type = f.extension
+    if(file_type == "gz") file_type = "vcf"
     '''
+    echo !{file_type}
+
     java -jar !{params.picard_jar} LiftoverVcf \
 	   I=!{f} \
-	   O=!{input_tag}_!{params.genome_into}.vcf \
+	   O=!{input_tag}_!{params.genome_into}.!{file_type} \
 	   C=!{chain_file} \
-	   REJECT=!{input_tag}_!{params.genome_into}_reject.vcf \
+	   REJECT=!{input_tag}_!{params.genome_into}_reject.!{file_type} \
 	   R=!{params.ref} \
 	   VERBOSITY=ERROR
     '''
