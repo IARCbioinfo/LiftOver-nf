@@ -24,6 +24,7 @@ params.chain_folder = null
 params.output_folder = "liftover_output"
 params.genome_from = null
 params.genome_into = null
+params.picard_jar = null
 
 log.info ""
 log.info "--------------------------------------------------------"
